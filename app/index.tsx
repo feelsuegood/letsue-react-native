@@ -1,4 +1,4 @@
-// import { API_KEY } from "@env";
+import { API_KEY } from "@env";
 import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
@@ -54,12 +54,10 @@ export default function Index() {
       longitude,
     });
     setCity(location[0]?.city || "Can't find you");
-    // * get json structure
-    // const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`;
+    // console.log(API_KEY);
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`;
+    const response = await fetch(url);
     // console.log(url);
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`,
-    );
     const json = await response.json();
     setDays(json.list);
   };
@@ -70,7 +68,11 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <View style={styles.city}>
-        <Text style={styles.cityName}>{city.toUpperCase()}</Text>
+        {city ? (
+          <Text style={styles.cityName}>{city.toUpperCase()}</Text>
+        ) : (
+          <Text style={styles.cityName}>Loading...</Text>
+        )}
       </View>
       <ScrollView
         horizontal
@@ -80,7 +82,7 @@ export default function Index() {
         {Array.isArray(days) && days.length === 0 ? (
           <View style={{ ...styles.day, alignItems: "center" }}>
             <ActivityIndicator
-              color="white"
+              color="black"
               size="large"
               style={{ marginTop: 10 }}
             />
