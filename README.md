@@ -5,11 +5,13 @@ A simple weather application built with React Native and Expo, providing real-ti
 ## Features
 
 - 📍 Real-time location-based weather information
-- 🌡️ Current temperature display
+- 🌡️ Temperature display
 - 🌤️ Weather conditions with descriptions
-- 📅 5-day weather forecast
+- 📅 3-hour interval weather forecast
 - 📱 Horizontal swipeable interface
 - 🏙️ Current city display
+- 🎯 Smooth animations and transitions
+- 📱 Haptic feedback for better user experience
 
 ## Technologies Used
 
@@ -18,15 +20,6 @@ A simple weather application built with React Native and Expo, providing real-ti
 - TypeScript
 - OpenWeatherMap API
 - expo-location for geolocation
-
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- Node.js (v14 or higher)
-- npm or yarn
-- Expo CLI
-- iOS Simulator (for Mac users) or Android Studio (for Android development)
 
 ## Environment Setup
 
@@ -44,3 +37,11 @@ The app will request permission to access your location. Once granted, it will:
 2. Show the current temperature
 3. Provide weather conditions and descriptions
 4. Allow you to swipe horizontally to view the 5-day forecast
+
+## Improvements
+
+1. Add a settings screen to change the temperature unit
+2. Support for multiple locations
+3. Add weather alerts and notifications
+4. Implement offline support for previously fetched data
+5. Add more detailed weather information (humidity, wind speed, etc.)

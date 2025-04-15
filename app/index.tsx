@@ -41,6 +41,7 @@ export default function Index() {
   const [city, setCity] = useState("Loading...");
   const [days, setDays] = useState<IWeatherData | []>([]);
   const [ok, setOk] = useState(true);
+
   const getWeather = async () => {
     const { granted } = await Location.requestForegroundPermissionsAsync();
     if (!granted) {
@@ -59,8 +60,24 @@ export default function Index() {
     const response = await fetch(url);
     // console.log(url);
     const json = await response.json();
-    setDays(json.list);
+
+    // Filter out past weather data and sort by closest time to current time
+    const now = new Date();
+    const futureDays = json.list.filter((day: IWeatherData) => {
+      const dayTime = new Date(day.dt_txt).getTime();
+      return dayTime >= now.getTime();
+    });
+
+    // Sort remaining data by time
+    const sortedDays = futureDays.sort((a: IWeatherData, b: IWeatherData) => {
+      const timeA = new Date(a.dt_txt).getTime();
+      const timeB = new Date(b.dt_txt).getTime();
+      return timeA - timeB;
+    });
+
+    setDays(sortedDays);
   };
+
   useEffect(() => {
     getWeather();
   }, []);
@@ -135,7 +152,7 @@ const styles = StyleSheet.create({
   day: {
     width: SCREEN_WIDTH,
     alignItems: "flex-start",
-    paddingHorizontal: 49,
+    paddingHorizontal: 29,
   },
   temp: {
     fontSize: 100,
