@@ -1,3 +1,4 @@
+// import { API_KEY } from "@env";
 import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
@@ -9,9 +10,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from "react-native";
-import { API_KEY } from "@env";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 // Define a type for the weather data - Array of objects
 interface IWeatherData {
@@ -25,6 +24,18 @@ interface IWeatherData {
   dt_txt: string;
 }
 [];
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
+const icons: Record<string, string> = {
+  Clouds: "cloudy",
+  Clear: "day-sunny",
+  Atmosphere: "cloudy-gusts",
+  Snow: "snow",
+  Rain: "rains",
+  Drizzle: "rain",
+  Thunderstorm: "lightning",
+};
 
 export default function Index() {
   const [city, setCity] = useState("Loading...");
@@ -67,7 +78,7 @@ export default function Index() {
         pagingEnabled
       >
         {Array.isArray(days) && days.length === 0 ? (
-          <View style={styles.day}>
+          <View style={{ ...styles.day, alignItems: "center" }}>
             <ActivityIndicator
               color="white"
               size="large"
@@ -75,9 +86,23 @@ export default function Index() {
             />
           </View>
         ) : (
-          (days as any[]).map((day: any, index: number) => (
-            <View style={styles.day}>
-              <Text style={styles.temp}>{Math.round(day.main.temp)}°</Text>
+          (days as IWeatherData[]).map((day: IWeatherData, index: number) => (
+            <View key={index} style={styles.day}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: "100%",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.temp}>{Math.round(day.main.temp)}° </Text>
+                <Fontisto
+                  name={icons[day.weather[0].main]}
+                  size={100}
+                  color="black"
+                />
+              </View>
               <Text style={styles.weather}>{day.weather[0].main}</Text>
               <Text style={styles.description}>
                 {day.weather[0].description.charAt(0).toUpperCase() +
@@ -107,9 +132,15 @@ const styles = StyleSheet.create({
   },
   day: {
     width: SCREEN_WIDTH,
-    alignItems: "center",
+    alignItems: "flex-start",
+    paddingHorizontal: 49,
   },
-  temp: { fontSize: 178, fontWeight: "600", marginBottom: -20 },
+  temp: {
+    fontSize: 100,
+    fontWeight: "600",
+    marginBottom: -10,
+    paddingRight: 10,
+  },
   weather: { fontSize: 50, fontWeight: "600" },
   description: { fontSize: 20, fontWeight: "500" },
   dt: { fontSize: 20, fontWeight: "200", marginTop: 5 },
