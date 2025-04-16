@@ -4,14 +4,12 @@ A simple weather application built with React Native and Expo, providing real-ti
 
 ## Features
 
-- 📍 Real-time location-based weather information
+- 📍 Location-based weather information
 - 🌡️ Temperature display
 - 🌤️ Weather conditions with descriptions
 - 📅 3-hour interval weather forecast
 - 📱 Horizontal swipeable interface
 - 🏙️ Current city display
-- 🎯 Smooth animations and transitions
-- 📱 Haptic feedback for better user experience
 
 ## Technologies Used
 
@@ -45,3 +43,7 @@ The app will request permission to access your location. Once granted, it will:
 3. Add weather alerts and notifications
 4. Implement offline support for previously fetched data
 5. Add more detailed weather information (humidity, wind speed, etc.)
+
+## Inspiration
+
+- [Weather App Concept by Caroline Lenzing](https://dribbble.com/shots/14717133-Weather-App-Concept)
