@@ -1,6 +1,6 @@
 # SueWeather App
 
-A simple weather application built with React Native and Expo, providing real-time weather information based on your current location.
+A lightweight weather mobile app developed using React Native and Expo, delivering weather forecasts based on the user’s current location.
 
 ## Features
 
