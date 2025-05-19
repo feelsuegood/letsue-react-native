@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
   Alert,
+  Platform,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "../colors";
@@ -35,7 +36,9 @@ export default function Index() {
   const loadToDos = async () => {
     try {
       const s = await AsyncStorage.getItem(STORAGE_KEY);
-      setToDos(JSON.parse(s));
+      if (s) {
+        setToDos(JSON.parse(s));
+      }
     } catch (e) {
       // saving error
     }
@@ -60,19 +63,29 @@ export default function Index() {
     setText("");
   };
   const deleteToDos = (key) => {
-    Alert.alert("Delete To Do", "Are you sure?", [
-      { text: "Cancle", style: "cancel" },
-      {
-        text: "I'm Sure.",
-        style: "destructive",
-        onPress: async () => {
-          const newToDos = { ...toDos };
-          delete newToDos[key];
-          setToDos(newToDos);
-          await saveToDos(newToDos);
+    if (Platform.OS === "web") {
+      const ok = confirm("Do you want to delete this To Do?");
+      if (ok) {
+        const newToDos = { ...toDos };
+        delete newToDos[key];
+        setToDos(newToDos);
+        saveToDos(newToDos);
+      }
+    } else {
+      Alert.alert("Delete To Do", "Are you sure?", [
+        { text: "Cancle", style: "cancel" },
+        {
+          text: "I'm Sure.",
+          style: "destructive",
+          onPress: async () => {
+            const newToDos = { ...toDos };
+            delete newToDos[key];
+            setToDos(newToDos);
+            await saveToDos(newToDos);
+          },
         },
-      },
-    ]);
+      ]);
+    }
   };
   return (
     <View style={styles.container}>
@@ -102,7 +115,7 @@ export default function Index() {
       />
       <ScrollView>
         {/* Object.keys(toDos) -> give array of keys */}
-        {Object.keys(toDos).map((key) =>
+        {Object.keys(toDos || {}).map((key) =>
           // classify travel and work
           toDos[key].work === working ? (
             <View style={styles.toDo} key={key}>
