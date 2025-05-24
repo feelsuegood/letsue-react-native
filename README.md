@@ -1,4 +1,4 @@
-# 🚀 LetsUE React Native Projects
+# 🚀 LetSue React Native Projects
 
 A collection of React Native mobile applications built with Expo.
 
@@ -28,3 +28,6 @@ A minimalist a to-do list application that helps you stay organized:
 Each project has its own setup instructions in their respective directories:
 - `/sueweather` - Weather application
 - `/keep-sueteady` - A to-do list application
+
+## 📚 Acknowledges
+- [React Native 101 for Beginners - Nomad Coders](https://nomadcoders.co/react-native-for-beginners)
